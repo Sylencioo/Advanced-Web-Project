@@ -12,13 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('milestones', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('project_id'); // Reference to Project
-            $table->text('description');
-            $table->date('deadline');
-            $table->enum('status', ['pending', 'completed', 'overdue'])->default('pending');
-            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
-            $table->timestamps();
+            $table->id(); // Primary key
+            $table->foreignId('grant_id')->constrained()->onDelete('cascade');
+            $table->string('milestone_name'); // Name of the milestone
+            $table->date('target_completion_date'); // Target completion date
+            $table->text('deliverable')->nullable(); // Deliverable details (optional)
+            $table->enum('status', ['pending', 'completed', 'overdue'])->default('pending'); // Status of the milestone
+            $table->text('remark')->nullable(); // Remarks about the milestone update
+            $table->date('date_updated')->nullable(); // Date the milestone was last updated
+            $table->timestamps(); // Created and updated timestamps
         });
     }
 

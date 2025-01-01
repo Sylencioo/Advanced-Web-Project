@@ -6,8 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Milestone extends Model
 {
-    public function project()
-{
-    return $this->belongsTo(Project::class);
-}
+    protected $fillable = [
+        'grant_id', 'description', 'deadline', 'status'
+    ];
+
+    public function grant()
+    {
+        return $this->belongsTo(Grant::class);
+    }
 }

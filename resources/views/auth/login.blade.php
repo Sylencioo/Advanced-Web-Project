@@ -1,34 +1,41 @@
-<x-guest-layout>
+@extends('layouts.master')
+
+@section('title', 'Login')
+
+@section('content')
+<div class="text-center py-12">
+    <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-100 mt-5">
+        Login
+    </h1>
+    <p class="text-lg text-gray-600 dark:text-gray-300 mb-6 login-subheading">
+        Please login to continue managing grants, academicians, and milestones.
+    </p>
+
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form method="POST" action="{{ route('login') }}">
+    <form method="POST" action="{{ route('login') }}" class="mt-8 max-w-md mx-auto">
         @csrf
 
         <!-- Email Address -->
-        <div>
+        <div class="mb-4">
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
+        <div class="mb-4">
             <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
+            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <!-- Remember Me -->
-        <div class="block mt-4">
+        <div class="mb-4">
             <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
+                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
+                <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
             </label>
         </div>
 
@@ -39,9 +46,10 @@
                 </a>
             @endif
 
-            <x-primary-button class="ms-3">
+            <x-primary-button class="ml-4" style="background-color: var(--accent-color); border-color: var(--accent-color);">
                 {{ __('Log in') }}
             </x-primary-button>
         </div>
     </form>
-</x-guest-layout>
+</div>
+@endsection

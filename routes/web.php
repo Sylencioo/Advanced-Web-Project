@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\AcademicianController;
 use App\Http\Controllers\GrantController;
 use App\Http\Controllers\MilestoneController;
 use Illuminate\Support\Facades\Route;
@@ -20,14 +20,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'role:leader'])->group(function () {
-    Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index'); // View all projects
-    Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create'); // Show create form
-    Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store'); // Save new project
-    Route::get('/projects/{id}/edit', [ProjectController::class, 'edit'])->name('projects.edit'); // Show edit form
-    Route::put('/projects/{id}', [ProjectController::class, 'update'])->name('projects.update'); // Update project
-    Route::delete('/projects/{id}', [ProjectController::class, 'destroy'])->name('projects.destroy'); // Delete project
-});
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/grants', [GrantController::class, 'index'])->name('grants.index'); // View all grants
@@ -46,5 +38,20 @@ Route::middleware(['auth', 'role:leader'])->group(function () {
     Route::put('/milestones/{id}', [MilestoneController::class, 'update'])->name('milestones.update'); // Update milestone
     Route::delete('/milestones/{id}', [MilestoneController::class, 'destroy'])->name('milestones.destroy'); // Delete milestone
 });
+
+// Grant routes
+Route::resource('grants', GrantController::class);
+
+// Milestone routes
+Route::get('/grants/{grant_id}/milestones', [MilestoneController::class, 'index'])->name('milestones.index');
+Route::get('/grants/{grant_id}/milestones/create', [MilestoneController::class, 'create'])->name('milestones.create');
+Route::post('/grants/{grant_id}/milestones', [MilestoneController::class, 'store'])->name('milestones.store');
+Route::get('/milestones/{id}/edit', [MilestoneController::class, 'edit'])->name('milestones.edit');
+Route::put('/milestones/{id}', [MilestoneController::class, 'update'])->name('milestones.update');
+Route::delete('/milestones/{id}', [MilestoneController::class, 'destroy'])->name('milestones.destroy');
+Route::get('/milestones/{id}', [MilestoneController::class, 'show'])->name('milestones.show');
+
+// Academician routes
+Route::resource('academicians', AcademicianController::class);
 
 require __DIR__.'/auth.php';

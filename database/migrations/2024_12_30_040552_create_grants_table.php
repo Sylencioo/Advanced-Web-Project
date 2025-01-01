@@ -18,8 +18,7 @@ return new class extends Migration
             $table->decimal('amount', 10, 2);
             $table->date('start_date');
             $table->integer('duration'); // in months
-            $table->unsignedBigInteger('leader_id'); // Reference to User (Project Leader)
-            $table->foreign('leader_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('leader_id')->constrained('academicians'); // Reference to User (Project Leader)
             $table->timestamps();
         });
     }

@@ -1,36 +1,28 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
-@section('title', 'Milestones for Project')
+@section('title', 'Milestones')
 
 @section('content')
-<h1 class="mb-4">Milestones</h1>
-<a href="{{ route('milestones.create', $project_id) }}" class="btn btn-primary mb-3">Add New Milestone</a>
+<div class="text-center py-12">
+    <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-100 mt-5">
+        Milestones
+    </h1>
+    <p class="text-lg text-gray-600 dark:text-gray-300 mt-3">
+        Set and achieve project milestones.
+    </p>
 
-<table class="table table-bordered">
-    <thead class="table-dark">
-        <tr>
-            <th>Description</th>
-            <th>Deadline</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
+    <div class="row mt-5">
         @foreach($milestones as $milestone)
-        <tr>
-            <td>{{ $milestone->description }}</td>
-            <td>{{ $milestone->deadline }}</td>
-            <td>{{ ucfirst($milestone->status) }}</td>
-            <td>
-                <a href="{{ route('milestones.edit', $milestone->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                <form action="{{ route('milestones.destroy', $milestone->id) }}" method="POST" style="display: inline-block;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                </form>
-            </td>
-        </tr>
+        <div class="col-md-4">
+            <div class="card text-center h-100">
+                <div class="card-body">
+                    <h3 class="card-title">{{ $milestone->milestone_name }}</h3>
+                    <p class="card-text">{{ $milestone->status }}</p>
+                    <a href="{{ route('milestones.show', $milestone->id) }}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
         @endforeach
-    </tbody>
-</table>
+    </div>
+</div>
 @endsection

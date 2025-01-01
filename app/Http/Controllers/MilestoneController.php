@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Milestone;
-use App\Models\Project;
+use App\Models\Grant;
 use Illuminate\Http\Request;
 
 class MilestoneController extends Controller
@@ -11,43 +11,44 @@ class MilestoneController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($project_id)
+    public function index($grant_id)
     {
-        $milestones = Milestone::where('project_id', $project_id)->get();
-        return view('milestones.index', compact('milestones', 'project_id'));
+        $milestones = Milestone::where('grant_id', $grant_id)->get();
+        return view('milestones.index', compact('milestones', 'grant_id'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create($project_id)
+    public function create($grant_id)
     {
-        return view('milestones.create', compact('project_id'));
+        return view('milestones.create', compact('grant_id'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-public function store(Request $request)
-{
-    $validated = $request->validate([
-        'project_id' => 'required|exists:projects,id',
-        'description' => 'required|string',
-        'deadline' => 'required|date',
-        'status' => 'required|in:pending,completed,overdue',
-    ]);
+    public function store(Request $request, $grant_id)
+    {
+        $validated = $request->validate([
+            'description' => 'required|string',
+            'deadline' => 'required|date',
+            'status' => 'required|in:pending,completed,overdue',
+        ]);
 
-    Milestone::create($validated);
+        $validated['grant_id'] = $grant_id;
 
-    return redirect()->route('milestones.index', $validated['project_id'])->with('success', 'Milestone added successfully!');
-}
+        Milestone::create($validated);
+
+        return redirect()->route('milestones.index', $grant_id)->with('success', 'Milestone added successfully!');
+    }
 
     /**
      * Display the specified resource.
      */
     public function show(Milestone $milestone)
     {
-        //
+        return view('milestones.show', compact('milestone'));
     }
 
     /**
@@ -69,11 +70,11 @@ public function store(Request $request)
             'deadline' => 'required|date',
             'status' => 'required|in:pending,completed,overdue',
         ]);
-    
+
         $milestone = Milestone::findOrFail($id);
         $milestone->update($validated);
-    
-        return redirect()->route('milestones.index', $milestone->project_id)->with('success', 'Milestone updated successfully!');
+
+        return redirect()->route('milestones.index', $milestone->grant_id)->with('success', 'Milestone updated successfully!');
     }
 
     /**
@@ -83,7 +84,7 @@ public function store(Request $request)
     {
         $milestone = Milestone::findOrFail($id);
         $milestone->delete();
-    
-        return redirect()->route('milestones.index', $milestone->project_id)->with('success', 'Milestone deleted successfully!');
+
+        return redirect()->route('milestones.index', $milestone->grant_id)->with('success', 'Milestone deleted successfully!');
     }
 }

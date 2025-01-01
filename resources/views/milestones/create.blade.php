@@ -1,16 +1,12 @@
 @extends('layouts.app')
 
-@section('title', isset($milestone) ? 'Edit Milestone' : 'Add New Milestone')
+@section('title', 'Edit Milestone')
 
 @section('content')
-<h1 class="mb-4">{{ isset($milestone) ? 'Edit Milestone' : 'Add New Milestone' }}</h1>
-<form action="{{ isset($milestone) ? route('milestones.update', $milestone->id) : route('milestones.store') }}" method="POST">
+<h1 class="mb-4">Edit Milestone</h1>
+<form action="{{ route('milestones.update', $milestone->id) }}" method="POST">
     @csrf
-    @if(isset($milestone))
-        @method('PUT')
-    @endif
-
-    <input type="hidden" name="project_id" value="{{ $project_id ?? $milestone->project_id }}">
+    @method('PUT')
 
     <div class="mb-3">
         <label for="description" class="form-label">Description</label>
@@ -25,12 +21,12 @@
     <div class="mb-3">
         <label for="status" class="form-label">Status</label>
         <select name="status" id="status" class="form-control">
-            <option value="pending" {{ (isset($milestone) && $milestone->status == 'pending') ? 'selected' : '' }}>Pending</option>
-            <option value="completed" {{ (isset($milestone) && $milestone->status == 'completed') ? 'selected' : '' }}>Completed</option>
-            <option value="overdue" {{ (isset($milestone) && $milestone->status == 'overdue') ? 'selected' : '' }}>Overdue</option>
+            <option value="pending" {{ $milestone->status == 'pending' ? 'selected' : '' }}>Pending</option>
+            <option value="completed" {{ $milestone->status == 'completed' ? 'selected' : '' }}>Completed</option>
+            <option value="overdue" {{ $milestone->status == 'overdue' ? 'selected' : '' }}>Overdue</option>
         </select>
     </div>
 
-    <button type="submit" class="btn btn-success">{{ isset($milestone) ? 'Update Milestone' : 'Create Milestone' }}</button>
+    <button type="submit" class="btn btn-success">Update Milestone</button>
 </form>
 @endsection
