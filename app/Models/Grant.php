@@ -13,12 +13,12 @@ class Grant extends Model
     ];
     public function leader()
 {
-    return $this->belongsTo(User::class, 'leader_id');
+    return $this->belongsTo(Academician::class, 'leader_id');
 }
 
 public function members()
 {
-    return $this->belongsToMany(User::class, 'grant_user', 'grant_id', 'user_id');
+    return $this->belongsToMany(Academician::class, 'grant_academician', 'grant_id', 'academician_id');
 }
 
 }

@@ -50,10 +50,11 @@
                 <div class="card-body">
                     <h3 class="card-title">Milestones</h3>
                     <p class="card-text">Set and achieve project milestones.</p>
-                    <a href="{{ route('milestones.index', ['grant_id' => 1]) }}" class="btn btn-success">View Milestones</a>
+                    <a href="{{ route('milestones.index') }}" class="btn btn-success">View Milestones</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 @endsection

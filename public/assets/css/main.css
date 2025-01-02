@@ -95,6 +95,106 @@
 .login-subheading {
   margin-top: 2rem; /* Increase top margin */
 }
+.register-heading {
+  margin-top: 150px; /* Adjust the value as needed to prevent overlap */
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  color: #333; /* Adjust color to match your theme */
+}
+.register-heading {
+  margin-top: 120px; /* Prevent overlap */
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  color: #333;
+}
+
+.register-subheading {
+  font-size: 1rem;
+  font-style: italic;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.form-container {
+  max-width: 500px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  flex: 1;
+  margin-right: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.form-group input {
+  flex: 2;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.btn-register {
+  background-color: #28a745; /* Green */
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-register:hover {
+  background-color: #218838;
+}
+
+.box-layout {
+  display: flex;
+  justify-content: center;
+  margin: 50px 0;
+}
+
+.box {
+  flex: 1;
+  margin: 10px;
+  padding: 20px;
+  text-align: center;
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.box h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.box a {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.register-container {
+  margin-top: 50px; /* To push the entire container lower */
+}
+
 .welcome-subheading {
   font-size: 2rem; /* Increase font size */
   margin-top: 2rem; /* Increase top margin */
