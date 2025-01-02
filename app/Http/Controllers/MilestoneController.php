@@ -11,15 +11,17 @@ class MilestoneController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($grant_id)
+    public function index()
     {
-        $milestones = Milestone::where('grant_id', $grant_id)->get();
-        return view('milestones.index', compact('milestones', 'grant_id'));
+        $milestones = Milestone::all();
+        return view('milestones.index', compact('milestones'));
     }
+
 
     /**
      * Show the form for creating a new resource.
      */
+
     public function create($grant_id)
     {
         return view('milestones.create', compact('grant_id'));
@@ -46,8 +48,9 @@ class MilestoneController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Milestone $milestone)
+    public function show($id)
     {
+        $milestone = Milestone::findOrFail($id);
         return view('milestones.show', compact('milestone'));
     }
 

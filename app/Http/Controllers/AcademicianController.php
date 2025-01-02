@@ -46,10 +46,12 @@ class AcademicianController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Academician $academician)
+    public function show($id)
     {
+        $academician = Academician::findOrFail($id);
         return view('academicians.show', compact('academician'));
     }
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -62,7 +64,7 @@ class AcademicianController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Academician $academician)
+    public function update(Request $request, $id)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -73,9 +75,9 @@ class AcademicianController extends Controller
             'position' => 'required|string|max:255',
         ]);
 
+        $academician = Academician::findOrFail($id);
         $academician->update($validated);
-
-        return redirect()->route('academicians.index')->with('success', 'Academician updated successfully.');
+        return redirect()->route('academicians.show', $academician->id)->with('success', 'Academician updated successfully!');
     }
 
     /**

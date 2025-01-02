@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Grant;
+use App\Models\Academician;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class GrantController extends Controller
      */
     public function index()
     {
-        $grants = Grant::with('leader')->get(); // Fetch all grants with leader info
+        $grants = Grant::all();
         return view('grants.index', compact('grants'));
     }
 
@@ -60,7 +61,8 @@ class GrantController extends Controller
     public function show($id)
     {
         $grant = Grant::with('leader', 'members')->findOrFail($id);
-        return view('grants.show', compact('grant'));
+        $academicians = Academician::all();
+        return view('grants.show', compact('grant', 'academicians'));
     }
 
     /**
@@ -101,8 +103,21 @@ class GrantController extends Controller
         ]);
     
         $grant->members()->sync($validated['members']);
-        
+
         return redirect()->route('grants.index')->with('success', 'Grant updated successfully!');
+    }
+    public function addMember(Request $request, $id)
+    {
+        $grant = Grant::findOrFail($id);
+        $grant->members()->attach($request->academician_id);
+        return redirect()->route('grants.show', $id)->with('success', 'Member added successfully!');
+    }
+
+    public function removeMember($grant_id, $academician_id)
+    {
+        $grant = Grant::findOrFail($grant_id);
+        $grant->members()->detach($academician_id);
+        return redirect()->route('grants.show', $grant_id)->with('success', 'Member removed successfully!');
     }
 
     /**
