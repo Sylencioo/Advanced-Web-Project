@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AcademicianController;
 use App\Http\Controllers\GrantController;
 use App\Http\Controllers\MilestoneController;
+use App\Http\Controllers\RegisterController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -43,8 +45,12 @@ Route::middleware(['auth', 'role:leader'])->group(function () {
 Route::resource('grants', GrantController::class);
 Route::post('/grants/{id}/add-member', [GrantController::class, 'addMember'])->name('grants.addMember');
 Route::delete('/grants/{grant_id}/remove-member/{academician_id}', [GrantController::class, 'removeMember'])->name('grants.removeMember');
+
 Route::resource('milestones', MilestoneController::class);
+
 Route::resource('academicians', AcademicianController::class);
 
+Route::get('/register', [RegisterController::class, 'create'])->name('register');
+Route::post('/register', [RegisterController::class, 'store']);
 
 require __DIR__.'/auth.php';
