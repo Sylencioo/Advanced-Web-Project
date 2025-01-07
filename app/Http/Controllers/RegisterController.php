@@ -1,44 +1,49 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
     /**
-     * Display the registration view.
+     * Display the registration form.
+     *
+     * @return \Illuminate\View\View
      */
-    public function create()
+    public function showRegistrationForm()
     {
-        return view('auth.register');
+        return view('register');
     }
 
     /**
-     * Handle an incoming registration request.
+     * Handle the registration request.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function register(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']),
         ]);
 
-        event(new Registered($user));
+        if ($user) {
+            Auth::login($user);
+            return redirect()->route('/login')->with('success', 'Registration successful!');
+        }
 
-        auth()->login($user);
-
-        return redirect()->route('dashboard');
+        return redirect()->back()->with('error', 'Registration failed. Please try again.');
     }
 }

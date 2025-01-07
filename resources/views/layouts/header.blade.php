@@ -11,10 +11,15 @@
             </a>
 
             <nav id="navmenu" class="navmenu">
+            @auth
+    <span>{{ Auth::user()->name }}</span>
+    <a href="{{ route('logout') }}">Logout</a>
+@else
                 <ul>
                     <li><a href="{{ route('login') }}">Login</a></li>
                     <li><a href="{{ route('register') }}">Register</a></li>
                 </ul>
+                @endauth
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
         </div>

@@ -26,8 +26,29 @@
             <label for="password-confirm">Confirm Password</label>
             <input id="password-confirm" type="password" name="password_confirmation" required>
         </div>
+        <div class="form-group">
+            <label for="role">Role</label>
+            <select id="role" name="role" required>
+                <option value="academician">Academician</option>
+                <option value="admin">Admin</option>
+                <option value="staff">Staff</option>
+            </select>
+        </div>
         <button type="submit" class="btn-green">Register</button>
-
     </form>
 </div>
+@if(session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@endif
+
+@if($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 @endsection

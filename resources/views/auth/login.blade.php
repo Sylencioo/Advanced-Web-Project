@@ -18,7 +18,7 @@
             <label for="password">Password</label>
             <input id="password" type="password" name="password" required>
         </div>
-        <a href="{{ route('login') }}" class="btn-green">Login</a>
+        <button type="submit" class="btn-green">Login</button>
     </form>
-</div>
-@endsection
+
+    @endsection

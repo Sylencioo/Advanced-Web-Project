@@ -12,19 +12,9 @@
         Manage grants, projects, and milestones efficiently.
     </p>
 
-    <!-- Authenticated User Section -->
-    @auth
-        <p class="mt-4 text-lg text-gray-700 dark:text-gray-200">
-            Welcome, {{ Auth::user()->name }}!
-        </p>
-        <a href="{{ route('grants.index') }}" class="btn btn-primary mt-4">View Grants</a>
-    @else
-        <!-- Guest Section -->
-        <p class="mt-6 text-sm italic text-gray-500 dark:text-gray-400">
-            Please login to access the system
-        </p>
-    @endauth    
-
+    @guest
+    <p>Please log in to use the Research Management System.</p>
+@else
     <!-- 3 Boxes Section -->
     <div class="row mt-5">
         <div class="col-md-4">
@@ -56,5 +46,5 @@
         </div>
     </div>
 </div>
-
+@endguest
 @endsection

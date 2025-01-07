@@ -5,6 +5,7 @@ use App\Http\Controllers\AcademicianController;
 use App\Http\Controllers\GrantController;
 use App\Http\Controllers\MilestoneController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\AuthenticatedSessionController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -54,3 +55,12 @@ Route::get('/register', [RegisterController::class, 'create'])->name('register')
 Route::post('/register', [RegisterController::class, 'store']);
 
 require __DIR__.'/auth.php';
+Auth::routes();
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->name('logout');
+
