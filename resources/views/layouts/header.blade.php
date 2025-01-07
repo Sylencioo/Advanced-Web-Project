@@ -11,14 +11,21 @@
             </a>
 
             <nav id="navmenu" class="navmenu">
-            @auth
-    <span>{{ Auth::user()->name }}</span>
-    <a href="{{ route('logout') }}">Logout</a>
-@else
-                <ul>
-                    <li><a href="{{ route('login') }}">Login</a></li>
-                    <li><a href="{{ route('register') }}">Register</a></li>
-                </ul>
+                @auth
+                    <ul>
+                        <li><span>{{ Auth::user()->name }}</span></li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                @else
+                    <ul>
+                        <li><a href="{{ route('login') }}">Login</a></li>
+                        <li><a href="{{ route('register') }}">Register</a></li>
+                    </ul>
                 @endauth
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
