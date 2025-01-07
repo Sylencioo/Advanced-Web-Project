@@ -32,7 +32,7 @@
                 <div class="card-body">
                     <h3 class="card-title">Academicians</h3>
                     <p class="card-text">Explore academic contributions and collaborations.</p>
-                    <a href="{{ route('academicians.index') }}" class="btn btn-success">View Academicians</a>
+                    <a href="{{ route('academicians.index')}}" class="btn-green">View Academicians</a>
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@
                 <div class="card-body">
                     <h3 class="card-title">Grants</h3>
                     <p class="card-text">Manage and track research grants.</p>
-                    <a href="{{ route('grants.index') }}" class="btn btn-success">View Grants</a>
+                    <a href="{{ route('grants.index')}}" class="btn-green">View Grants</a>
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
                 <div class="card-body">
                     <h3 class="card-title">Milestones</h3>
                     <p class="card-text">Set and achieve project milestones.</p>
-                    <a href="{{ route('milestones.index') }}" class="btn btn-success">View Milestones</a>
+                    <a href="{{ route('milestones.index')}}" class="btn-green">View Milestones</a>
                 </div>
             </div>
         </div>

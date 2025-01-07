@@ -95,6 +95,21 @@
 .login-subheading {
   margin-top: 2rem; /* Increase top margin */
 }
+.btn-green {
+  background-color: #218838;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-green:hover {
+  background-color: #1e7e34;
+}
+
 .register-heading {
   margin-top: 150px; /* Adjust the value as needed to prevent overlap */
   font-size: 2rem;

@@ -18,7 +18,7 @@
                 <div class="card-body">
                     <h3 class="card-title">{{ $milestone->milestone_name }}</h3>
                     <p class="card-text">{{ $milestone->status }}</p>
-                    <a href="{{ route('milestones.show', $milestone->id) }}" class="btn btn-primary">View Details</a>
+                    <a href="{{ route('milestones.show', $milestone->id) }}" class="btn-green">View Details</a>
                 </div>
             </div>
         </div>

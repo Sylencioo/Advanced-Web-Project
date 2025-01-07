@@ -18,7 +18,7 @@
                 <div class="card-body">
                     <h3 class="card-title">{{ $academician->name }}</h3>
                     <p class="card-text">{{ $academician->department }}</p>
-                    <a href="{{ route('academicians.show', $academician->id) }}" class="btn btn-primary">View Details</a>
+                    <a href="{{ route('academicians.show', $academician->id) }}" class="btn-green">View Details</a>
                 </div>
             </div>
         </div>
