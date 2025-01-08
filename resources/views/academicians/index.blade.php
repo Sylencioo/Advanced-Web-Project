@@ -10,6 +10,10 @@
     <p class="text-lg text-gray-600 dark:text-gray-300 mt-3">
         Explore academic contributions and collaborations.
     </p>
+    <div class="text-right mb-3">
+    <a href="{{ route('academicians.create') }}" class="btn btn-success">Add New Academician</a>
+</div>
+
 
     <div class="row mt-5">
         @foreach($academicians as $academician)

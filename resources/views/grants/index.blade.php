@@ -10,6 +10,10 @@
     <p class="text-lg text-gray-600 dark:text-gray-300 mt-3">
         Manage and track research grants.
     </p>
+    <div class="text-right mb-3">
+    <a href="{{ route('grants.create') }}" class="btn btn-success">Add New Grant</a>
+</div>
+
 
     <div class="row mt-5">
         @foreach($grants as $grant)
