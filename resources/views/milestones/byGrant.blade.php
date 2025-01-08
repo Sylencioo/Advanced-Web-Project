@@ -27,6 +27,7 @@
                 </ul>
             @endif
             <a href="{{ route('milestones.create', ['grant_id' => $grant->id]) }}" class="btn btn-primary mt-3">Create Milestone</a>
+            <a href="{{ route('grants.show', $grant->id) }}" class="btn btn-primary mt-3">Back to Grant</a>
         </div>
     </div>
 </div>
