@@ -12,13 +12,15 @@ class Grant extends Model
         'title', 'provider', 'amount', 'start_date', 'duration', 'leader_id'
     ];
     public function leader()
-{
-    return $this->belongsTo(Academician::class, 'leader_id');
-}
-
-public function members()
-{
-    return $this->belongsToMany(Academician::class, 'grant_academician', 'grant_id', 'academician_id');
-}
+    {
+        return $this->belongsTo(Academician::class, 'leader_id');
+    }
+    
+    public function members()
+    {
+        return $this->belongsToMany(Academician::class, 'grant_academician')
+                    ->wherePivot('role', 'member');
+    }
+    
 
 }
