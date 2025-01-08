@@ -35,6 +35,14 @@
                 @endforeach
             </select>
         </div>
+        <div class="form-group mt-3">
+            <label for="members">Members</label>
+            <select id="members" name="members[]" class="form-control" multiple required>
+                @foreach($academicians as $academician)
+                    <option value="{{ $academician->id }}">{{ $academician->name }}</option>
+                @endforeach
+            </select>
+        </div>
         <div class="form-group mt-3 text-center">
             <button type="submit" class="btn btn-success">Save Grant</button>
         </div>

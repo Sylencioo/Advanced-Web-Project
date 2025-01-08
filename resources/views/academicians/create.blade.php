@@ -27,14 +27,15 @@
             <label for="department">Department</label>
             <input type="text" id="department" name="department" class="form-control" placeholder="Enter department" required>
         </div>
-        <div class="form-group mt-3">
-            <label for="position">Position</label>
-            <select id="position" name="position" class="form-control" required>
-                <option value="Professor">Professor</option>
-                <option value="Associate Professor">Assoc Prof. Senior Lecturer</option>
-                <option value="Lecturer">Lecturer</option>
-            </select>
-        </div>
+        <div class="form-group">
+    <label for="position">Position</label>
+    <select name="position" id="position" class="form-control">
+        <option value="Professor">Professor</option>
+        <option value="Associate Professor">Assoc Prof. Senior Lecturer</option>
+        <option value="Lecturer">Lecturer</option>
+    </select>
+</div>
+
         <div class="form-group mt-3 text-center">
             <button type="submit" class="btn btn-success">Save Academician</button>
         </div>

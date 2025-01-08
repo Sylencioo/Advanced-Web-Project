@@ -17,30 +17,45 @@
 
         <!-- Name -->
         <div class="mb-4">
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="$academician->name" required autofocus />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            <label for="name" class="form-label">Name</label>
+            <input type="text" id="name" name="name" class="form-control" value="{{ old('name', $academician->name) }}" required autofocus>
         </div>
 
-        <!-- Department -->
+        <!-- Staff Number -->
         <div class="mb-4">
-            <x-input-label for="department" :value="__('Department')" />
-            <x-text-input id="department" class="block mt-1 w-full" type="text" name="department" :value="$academician->department" required />
-            <x-input-error :messages="$errors->get('department')" class="mt-2" />
+            <label for="staff_number" class="form-label">Staff Number</label>
+            <input type="text" id="staff_number" name="staff_number" class="form-control" value="{{ old('staff_number', $academician->staff_number) }}" required>
         </div>
 
         <!-- Email -->
         <div class="mb-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="$academician->email" required />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" name="email" class="form-control" value="{{ old('email', $academician->email) }}" required>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button class="ml-4" style="background-color: var(--accent-color); border-color: var(--accent-color);">
-                {{ __('Update Academician') }}
-            </x-primary-button>
+        <!-- College -->
+        <div class="mb-4">
+            <label for="college" class="form-label">College</label>
+            <input type="text" id="college" name="college" class="form-control" value="{{ old('college', $academician->college) }}" required>
         </div>
+
+        <!-- Department -->
+        <div class="mb-4">
+            <label for="department" class="form-label">Department</label>
+            <input type="text" id="department" name="department" class="form-control" value="{{ old('department', $academician->department) }}" required>
+        </div>
+
+        <!-- Position -->
+        <div class="mb-4">
+            <label for="position" class="form-label">Position</label>
+            <select id="position" name="position" class="form-control" required>
+                <option value="Professor" {{ old('position', $academician->position) == 'Professor' ? 'selected' : '' }}>Professor</option>
+                <option value="Assoc Prof. Senior Lecturer" {{ old('position', $academician->position) == 'Assoc Prof. Senior Lecturer' ? 'selected' : '' }}>Assoc Prof. Senior Lecturer</option>
+                <option value="Lecturer" {{ old('position', $academician->position) == 'Lecturer' ? 'selected' : '' }}>Lecturer</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success">Update Academician</button>
     </form>
 </div>
 @endsection

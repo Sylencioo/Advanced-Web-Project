@@ -14,8 +14,11 @@
     <div class="card mt-5">
         <div class="card-body">
             <h3 class="card-title">{{ $academician->name }}</h3>
-            <p class="card-text"><strong>Department:</strong> {{ $academician->department }}</p>
+            <p class="card-text"><strong>Staff Number:</strong> {{ $academician->staff_number }}</p>
             <p class="card-text"><strong>Email:</strong> {{ $academician->email }}</p>
+            <p class="card-text"><strong>College:</strong> {{ $academician->college }}</p>
+            <p class="card-text"><strong>Department:</strong> {{ $academician->department }}</p>
+            <p class="card-text"><strong>Position:</strong> {{ $academician->position }}</p>
             <a href="{{ route('academicians.index') }}" class="btn btn-primary mt-3">Back to List</a>
             <a href="{{ route('academicians.edit', $academician->id) }}" class="btn btn-warning mt-3">Edit</a>
             <form action="{{ route('academicians.destroy', $academician->id) }}" method="POST" class="d-inline">
