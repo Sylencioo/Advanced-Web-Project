@@ -21,7 +21,12 @@ class MilestoneController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-
+    public function milestonesByGrant($grant_id)
+    {
+        $grant = Grant::with('milestones')->findOrFail($grant_id);
+        return view('milestones.byGrant', compact('grant'));
+    }
+    
     public function create($grant_id)
     {
         return view('milestones.create', compact('grant_id'));
