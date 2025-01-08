@@ -40,12 +40,7 @@
                 <div class="card-body">
                     <h3 class="card-title">Milestones</h3>
                     <p class="card-text">Set and achieve project milestones.</p>
-                    <!-- Assuming you want to link to the milestones of the first grant -->
-                    @if($grants->isNotEmpty())
-                        <a href="{{ route('milestones.index', ['grant_id' => $grants->first()->id]) }}" class="btn-green">View Milestones</a>
-                    @else
-                        <p>No grants available to view milestones.</p>
-                    @endif
+                    <a href="{{ route('milestones.index') }}" class="btn-green">View Milestones</a>
                 </div>
             </div>
         </div>

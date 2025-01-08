@@ -38,23 +38,24 @@ class GrantController extends Controller
             'amount' => 'required|numeric',
             'start_date' => 'required|date',
             'duration' => 'required|integer',
-            'leader_id' => 'required|exists:users,id',
+            'leader_id' => 'required|exists:academicians,id',
             'members' => 'required|array',
-            'members.*' => 'exists:users,id',
+            'members.*' => 'exists:academicians,id',
         ]);
-    
-        $grant = Grant::create($validated);([
-        'title' => $validated['title'],
-        'provider' => $validated['provider'],
-        'amount' => $validated['amount'],
-        'start_date' => $validated['start_date'],
-        'duration' => $validated['duration'],
-        'leader_id' => $validated['leader_id'],
+
+        $grant = Grant::create([
+            'title' => $validated['title'],
+            'provider' => $validated['provider'],
+            'amount' => $validated['amount'],
+            'start_date' => $validated['start_date'],
+            'duration' => $validated['duration'],
+            'leader_id' => $validated['leader_id'],
         ]);
+
         $grant->members()->attach($validated['members']);
+
         return redirect()->route('grants.index')->with('success', 'Grant added successfully!');
     }
-
     /**
      * Display the specified resource.
      */
