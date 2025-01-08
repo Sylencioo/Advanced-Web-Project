@@ -16,6 +16,7 @@ class CreateGrantAcademicianTable extends Migration
             $table->foreignId('grant_id')->constrained()->onDelete('cascade');
             $table->foreignId('academician_id')->constrained()->onDelete('cascade');
             $table->timestamps();
+            $table->enum('role', ['leader', 'member'])->default('member');
         });
     }
 
