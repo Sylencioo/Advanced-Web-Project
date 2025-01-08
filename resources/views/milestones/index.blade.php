@@ -11,18 +11,31 @@
         Set and achieve project milestones.
     </p>
 
-    <div class="text-right mb-3">
-        <a href="{{ route('milestones.create', ['grant_id' => $grant->id]) }}" class="btn btn-primary">Add Milestone</a>
-    </div>
-
     <div class="row mt-5">
-        @foreach($milestones as $milestone)
-        <div class="col-md-4">
+        @foreach($grants as $grant)
+        <div class="col-md-6">
             <div class="card text-center h-100">
                 <div class="card-body">
-                    <h3 class="card-title">{{ $milestone->milestone_name }}</h3>
-                    <p class="card-text">{{ $milestone->status }}</p>
-                    <a href="{{ route('milestones.show', $milestone->id) }}" class="btn-green">View Details</a>
+                    <h3 class="card-title">{{ $grant->title }}</h3>
+                    <p class="card-text"><strong>Provider:</strong> {{ $grant->provider }}</p>
+                    <p class="card-text"><strong>Amount:</strong> {{ $grant->amount }}</p>
+                    <p class="card-text"><strong>Start Date:</strong> {{ $grant->start_date }}</p>
+                    <p class="card-text"><strong>Duration:</strong> {{ $grant->duration }} months</p>
+                    <p class="card-text"><strong>Leader:</strong> {{ $grant->leader ? $grant->leader->name : 'N/A' }}</p>
+                    <h4 class="mt-4">Milestones</h4>
+                    @if($grant->milestones->isEmpty())
+                        <p>No milestones created yet.</p>
+                    @else
+                        <ul class="list-group">
+                            @foreach($grant->milestones as $milestone)
+                                <li class="list-group-item">
+                                    {{ $milestone->description }} - {{ $milestone->status }}
+                                    <a href="{{ route('milestones.show', $milestone->id) }}" class="btn btn-sm btn-info">View</a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
+                    <a href="{{ route('milestones.create', ['grant_id' => $grant->id]) }}" class="btn btn-primary mt-3">Create Milestone</a>
                 </div>
             </div>
         </div>

@@ -38,7 +38,7 @@ Route::post('/grants/{id}/add-member', [GrantController::class, 'addMember'])->n
 Route::delete('/grants/{grant_id}/remove-member/{academician_id}', [GrantController::class, 'removeMember'])->name('grants.removeMember');
 
 // Milestone routes
-Route::get('/grants/{grant_id}/milestones', [MilestoneController::class, 'index'])->name('milestones.index');
+Route::get('/milestones', [MilestoneController::class, 'index'])->name('milestones.index');
 Route::get('/grants/{grant_id}/milestones/create', [MilestoneController::class, 'create'])->name('milestones.create');
 Route::post('/grants/{grant_id}/milestones', [MilestoneController::class, 'store'])->name('milestones.store');
 Route::get('/milestones/{id}', [MilestoneController::class, 'show'])->name('milestones.show');
