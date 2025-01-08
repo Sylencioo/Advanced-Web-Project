@@ -3,56 +3,40 @@
 @section('title', 'Add New Academician')
 
 @section('content')
-<div class="text-center py-12">
-    <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-100 mt-5">
-        Add New Academician
-    </h1>
-    <p class="text-lg text-gray-600 dark:text-gray-300 mt-3">
-        Fill in the details to add a new academician.
-    </p>
-
-    <form method="POST" action="{{ route('academicians.store') }}" class="mt-8 max-w-md mx-auto">
+<div class="container mt-5">
+    <h1 class="text-center">Add New Academician</h1>
+    <form action="{{ route('academicians.store') }}" method="POST" class="mt-4">
         @csrf
-
-        <!-- Name -->
-        <div class="mb-4">
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" class="form-control" placeholder="Enter name" required>
         </div>
-
-        <!-- Department -->
-        <div class="mb-4">
-            <x-input-label for="department" :value="__('Department')" />
-            <x-text-input id="department" class="block mt-1 w-full" type="text" name="department" :value="old('department')" required />
-            <x-input-error :messages="$errors->get('department')" class="mt-2" />
+        <div class="form-group mt-3">
+            <label for="staff_number">Staff Number</label>
+            <input type="text" id="staff_number" name="staff_number" class="form-control" placeholder="Enter staff number" required>
         </div>
-
-        <!-- Email -->
-        <div class="mb-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div class="form-group mt-3">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Enter email" required>
         </div>
-
-        <!-- Phone -->
-        <div class="mb-4">
-            <x-input-label for="phone" :value="__('Phone')" />
-            <x-text-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" required />
-            <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+        <div class="form-group mt-3">
+            <label for="college">College</label>
+            <input type="text" id="college" name="college" class="form-control" placeholder="Enter college" required>
         </div>
-
-        <!-- Research Interests -->
-        <div class="mb-4">
-            <x-input-label for="research_interests" :value="__('Research Interests')" />
-            <textarea id="research_interests" class="block mt-1 w-full" name="research_interests" rows="4" required>{{ old('research_interests') }}</textarea>
-            <x-input-error :messages="$errors->get('research_interests')" class="mt-2" />
+        <div class="form-group mt-3">
+            <label for="department">Department</label>
+            <input type="text" id="department" name="department" class="form-control" placeholder="Enter department" required>
         </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button class="ml-4" style="background-color: var(--accent-color); border-color: var(--accent-color);">
-                {{ __('Add Academician') }}
-            </x-primary-button>
+        <div class="form-group mt-3">
+            <label for="position">Position</label>
+            <select id="position" name="position" class="form-control" required>
+                <option value="Professor">Professor</option>
+                <option value="Associate Professor">Assoc Prof. Senior Lecturer</option>
+                <option value="Lecturer">Lecturer</option>
+            </select>
+        </div>
+        <div class="form-group mt-3 text-center">
+            <button type="submit" class="btn btn-success">Save Academician</button>
         </div>
     </form>
 </div>

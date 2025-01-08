@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('college');
             $table->string('department');
-            $table->enum('position', ['Professor', 'Associate Professor', 'Senior Lecturer', 'Lecturer']);
+            $table->enum('position', ['Professor', 'Assoc Prof. Senior Lecturer', 'Lecturer']);
             $table->timestamps();
         });
     }

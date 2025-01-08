@@ -14,7 +14,7 @@
 
     @guest
     <p>Please log in to use the Research Management System.</p>
-@else
+    @else
     <!-- 3 Boxes Section -->
     <div class="row mt-5">
         <div class="col-md-4">
@@ -40,11 +40,16 @@
                 <div class="card-body">
                     <h3 class="card-title">Milestones</h3>
                     <p class="card-text">Set and achieve project milestones.</p>
-                    <a href="{{ route('milestones.index')}}" class="btn-green">View Milestones</a>
+                    <!-- Assuming you want to link to the milestones of the first grant -->
+                    @if($grants->isNotEmpty())
+                        <a href="{{ route('milestones.index', ['grant_id' => $grants->first()->id]) }}" class="btn-green">View Milestones</a>
+                    @else
+                        <p>No grants available to view milestones.</p>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
+    @endguest
 </div>
-@endguest
 @endsection

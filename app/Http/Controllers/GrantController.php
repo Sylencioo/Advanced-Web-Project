@@ -23,8 +23,8 @@ class GrantController extends Controller
      */
     public function create()
     {
-        $leaders = User::where('role', 'leader')->get(); // Fetch all project leaders
-        return view('grants.create', compact('leaders'));
+        $academicians = Academician::all();
+        return view('grants.create', compact('academicians'));
     }
 
     /**

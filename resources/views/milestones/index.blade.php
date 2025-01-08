@@ -12,9 +12,8 @@
     </p>
 
     <div class="text-right mb-3">
-    <a href="{{ route('milestones.create', ['grant_id' => $grant->id]) }}" class="btn btn-primary">Add Milestone</a>
-
-</div>
+        <a href="{{ route('milestones.create', ['grant_id' => $grant->id]) }}" class="btn btn-primary">Add Milestone</a>
+    </div>
 
     <div class="row mt-5">
         @foreach($milestones as $milestone)

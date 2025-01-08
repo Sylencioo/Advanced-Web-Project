@@ -53,6 +53,7 @@
                 @method('DELETE')
                 <button type="submit" class="btn btn-danger mt-3">Delete</button>
             </form>
+            <a href="{{ route('milestones.index', ['grant_id' => $grant->id]) }}" class="btn btn-info mt-3">View Milestones</a>
         </div>
     </div>
 </div>

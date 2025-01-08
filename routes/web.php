@@ -9,7 +9,8 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    $grants = \App\Models\Grant::all();
+    return view('welcome', compact('grants'));
 })->name('welcome');
 
 Route::get('/dashboard', function () {
@@ -37,7 +38,13 @@ Route::post('/grants/{id}/add-member', [GrantController::class, 'addMember'])->n
 Route::delete('/grants/{grant_id}/remove-member/{academician_id}', [GrantController::class, 'removeMember'])->name('grants.removeMember');
 
 // Milestone routes
-Route::resource('milestones', MilestoneController::class);
+Route::get('/grants/{grant_id}/milestones', [MilestoneController::class, 'index'])->name('milestones.index');
+Route::get('/grants/{grant_id}/milestones/create', [MilestoneController::class, 'create'])->name('milestones.create');
+Route::post('/grants/{grant_id}/milestones', [MilestoneController::class, 'store'])->name('milestones.store');
+Route::get('/milestones/{id}', [MilestoneController::class, 'show'])->name('milestones.show');
+Route::get('/milestones/{id}/edit', [MilestoneController::class, 'edit'])->name('milestones.edit');
+Route::put('/milestones/{id}', [MilestoneController::class, 'update'])->name('milestones.update');
+Route::delete('/milestones/{id}', [MilestoneController::class, 'destroy'])->name('milestones.destroy');
 
 // Academician routes
 Route::resource('academicians', AcademicianController::class);
