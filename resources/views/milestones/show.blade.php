@@ -17,8 +17,14 @@
             <p class="card-text"><strong>Target Completion Date:</strong> {{ $milestone->target_completion_date }}</p>
             <p class="card-text"><strong>Deliverable:</strong> {{ $milestone->deliverable }}</p>
             <p class="card-text"><strong>Status:</strong> {{ $milestone->status }}</p>
+            <p class="card-text"><strong>Remark:</strong> {{ $milestone->remark }}</p>
             <a href="{{ route('milestones.index') }}" class="btn btn-primary mt-3">Back to List</a>
             <a href="{{ route('milestones.edit', $milestone->id) }}" class="btn btn-warning mt-3">Edit</a>
+            <form action="{{ route('milestones.destroy', $milestone->id) }}" method="POST" class="d-inline">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger mt-3">Delete</button>
+            </form>
         </div>
     </div>
 </div>

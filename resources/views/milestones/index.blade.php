@@ -29,7 +29,7 @@
                         <ul class="list-group">
                             @foreach($grant->milestones as $milestone)
                                 <li class="list-group-item">
-                                    {{ $milestone->description }} - {{ $milestone->status }}
+                                    {{ $milestone->milestone_name }}
                                     <a href="{{ route('milestones.show', $milestone->id) }}" class="btn btn-sm btn-info">View</a>
                                 </li>
                             @endforeach

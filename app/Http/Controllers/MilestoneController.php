@@ -17,16 +17,18 @@ class MilestoneController extends Controller
         return view('milestones.index', compact('grants'));
     }
 
-    
     /**
-     * Show the form for creating a new resource.
+     * Display milestones for a specific grant.
      */
     public function milestonesByGrant($grant_id)
     {
         $grant = Grant::with('milestones')->findOrFail($grant_id);
         return view('milestones.byGrant', compact('grant'));
     }
-    
+
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create($grant_id)
     {
         return view('milestones.create', compact('grant_id'));
@@ -38,17 +40,26 @@ class MilestoneController extends Controller
     public function store(Request $request, $grant_id)
     {
         $validated = $request->validate([
-            'description' => 'required|string',
-            'deadline' => 'required|date',
+            'milestone_name' => 'required|string|max:255',
+            'target_completion_date' => 'required|date',
+            'deliverable' => 'nullable|string',
             'status' => 'required|in:pending,completed,overdue',
+            'remark' => 'nullable|string',
         ]);
-
-        $validated['grant_id'] = $grant_id;
-
-        Milestone::create($validated);
-
-        return redirect()->route('milestones.index', $grant_id)->with('success', 'Milestone added successfully!');
+    
+        $milestone = new Milestone();
+        $milestone->milestone_name = $validated['milestone_name'];
+        $milestone->grant_id = $grant_id;
+        $milestone->target_completion_date = $validated['target_completion_date'];
+        $milestone->deliverable = $validated['deliverable'] ?? null;
+        $milestone->status = $validated['status'];
+        $milestone->remark = $validated['remark'] ?? null;
+        $milestone->save();
+    
+        return redirect()->route('milestones.index')->with('success', 'Milestone added successfully!');
     }
+    
+    
 
     /**
      * Display the specified resource.
@@ -74,15 +85,17 @@ class MilestoneController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'description' => 'required|string',
-            'deadline' => 'required|date',
+            'milestone_name' => 'required|string',
+            'target_completion_date' => 'required|date',
+            'deliverable' => 'nullable|string',
             'status' => 'required|in:pending,completed,overdue',
+            'remark' => 'nullable|string',
         ]);
 
         $milestone = Milestone::findOrFail($id);
         $milestone->update($validated);
 
-        return redirect()->route('milestones.index', $milestone->grant_id)->with('success', 'Milestone updated successfully!');
+        return redirect()->route('milestones.byGrant', $milestone->grant_id)->with('success', 'Milestone updated successfully!');
     }
 
     /**
@@ -93,6 +106,6 @@ class MilestoneController extends Controller
         $milestone = Milestone::findOrFail($id);
         $milestone->delete();
 
-        return redirect()->route('milestones.index', $milestone->grant_id)->with('success', 'Milestone deleted successfully!');
+        return redirect()->route('milestones.byGrant', $milestone->grant_id)->with('success', 'Milestone deleted successfully!');
     }
 }

@@ -20,14 +20,17 @@
                 <ul class="list-group">
                     @foreach($grant->milestones as $milestone)
                         <li class="list-group-item">
-                            {{ $milestone->description }} - {{ $milestone->status }}
+                            {{ $milestone->milestone_name }}
                             <a href="{{ route('milestones.show', $milestone->id) }}" class="btn btn-sm btn-info">View</a>
                         </li>
                     @endforeach
                 </ul>
             @endif
-            <a href="{{ route('milestones.create', ['grant_id' => $grant->id]) }}" class="btn btn-primary mt-3">Create Milestone</a>
-            <a href="{{ route('grants.show', $grant->id) }}" class="btn btn-primary mt-3">Back to Grant</a>
+            <div class="d-flex justify-content-center mt-3">
+                <a href="{{ route('milestones.create', ['grant_id' => $grant->id]) }}" class="btn btn-info mr-2">Create Milestone</a>
+                <a href="{{ route('grants.show', $grant->id) }}" class="btn btn-primary ml-2">Back to Grant</a>
+                <a href="{{ route('milestones.index') }}" class="btn btn-secondary ml-2">Back to Milestones</a>
+            </div>
         </div>
     </div>
 </div>
