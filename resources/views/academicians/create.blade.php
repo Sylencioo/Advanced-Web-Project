@@ -1,44 +1,63 @@
 @extends('layouts.master')
 
-@section('title', 'Add New Academician')
+@section('title', 'Complete Academician Profile')
 
 @section('content')
 <div class="container mt-5">
-    <h1 class="text-center">Add New Academician</h1>
-    <form action="{{ route('academicians.store') }}" method="POST" class="mt-4">
+    <h1 class="text-center">Complete Academician Profile</h1>
+    <form method="POST" action="{{ route('academicians.store') }}" class="mt-4">
         @csrf
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" class="form-control" placeholder="Enter name" required>
-        </div>
-        <div class="form-group mt-3">
-            <label for="staff_number">Staff Number</label>
-            <input type="text" id="staff_number" name="staff_number" class="form-control" placeholder="Enter staff number" required>
-        </div>
-        <div class="form-group mt-3">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" class="form-control" placeholder="Enter email" required>
-        </div>
-        <div class="form-group mt-3">
-            <label for="college">College</label>
-            <input type="text" id="college" name="college" class="form-control" placeholder="Enter college" required>
-        </div>
-        <div class="form-group mt-3">
-            <label for="department">Department</label>
-            <input type="text" id="department" name="department" class="form-control" placeholder="Enter department" required>
-        </div>
-        <div class="form-group">
-    <label for="position">Position</label>
-    <select name="position" id="position" class="form-control">
-        <option value="Professor">Professor</option>
-        <option value="Associate Professor">Assoc Prof. Senior Lecturer</option>
-        <option value="Lecturer">Lecturer</option>
-    </select>
-</div>
 
-        <div class="form-group mt-3 text-center">
-            <button type="submit" class="btn btn-success">Save Academician</button>
+        <div class="mb-3">
+            <label for="user_id" class="form-label">Select User</label>
+            <select id="user_id" class="form-control @error('user_id') is-invalid @enderror" name="user_id" required>
+                <option value="">Select User</option>
+                @foreach($users as $user)
+                    <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})</option>
+                @endforeach
+            </select>
+            @error('user_id')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
+
+        <div class="mb-3">
+            <label for="staff_number" class="form-label">Staff Number</label>
+            <input id="staff_number" type="text" class="form-control @error('staff_number') is-invalid @enderror" name="staff_number" value="{{ old('staff_number') }}" required>
+            @error('staff_number')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="college" class="form-label">College</label>
+            <input id="college" type="text" class="form-control @error('college') is-invalid @enderror" name="college" value="{{ old('college') }}" required>
+            @error('college')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="department" class="form-label">Department</label>
+            <input id="department" type="text" class="form-control @error('department') is-invalid @enderror" name="department" value="{{ old('department') }}" required>
+            @error('department')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="position" class="form-label">Position</label>
+            <select id="position" class="form-control @error('position') is-invalid @enderror" name="position" required>
+                <option value="Professor">Professor</option>
+                <option value="Assoc Prof. Senior Lecturer">Assoc Prof. Senior Lecturer</option>
+                <option value="Lecturer">Lecturer</option>
+            </select>
+            @error('position')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
 @endsection

@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AcademicianController;
 use App\Http\Controllers\GrantController;
 use App\Http\Controllers\MilestoneController;
-use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,8 +24,12 @@ Route::middleware('auth')->group(function () {
 });
 
 // Registration routes
-Route::get('/register', [RegisterController::class, 'create'])->name('register');
-Route::post('/register', [RegisterController::class, 'store']);
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
+
+// Academician details routes
+Route::get('/academicians/create', [AcademicianController::class, 'create'])->name('academicians.create');
+Route::post('/academicians', [AcademicianController::class, 'store'])->name('academicians.store');
 
 // Authentication routes
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');

@@ -9,8 +9,9 @@ class Academician extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'staff_number', 'email', 'college', 'department', 'position'
+        'user_id', 'name', 'staff_number', 'email', 'college', 'department', 'position',
     ];
+    
 
     public function ledgrants(){
         return $this->hasMany(Grant::Class, 'leader_id');
@@ -20,5 +21,11 @@ class Academician extends Model
     {
         return $this->belongsToMany(Grant::class, 'grant_academician', 'academician_id', 'grant_id');
     }
+
+    public function user()
+{
+    return $this->belongsTo(User::class);
+}
+
 }
 

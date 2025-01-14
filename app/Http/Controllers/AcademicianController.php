@@ -3,90 +3,81 @@
 namespace App\Http\Controllers;
 
 use App\Models\Academician;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AcademicianController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $academicians = Academician::all();
         return view('academicians.index', compact('academicians'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        return view('academicians.create');
+        $users = User::where('role', 'academician')->get();
+        return view('academicians.create', compact('users'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'staff_number' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'staff_number' => 'required|string|max:255|unique:academicians',
             'college' => 'required|string|max:255',
             'department' => 'required|string|max:255',
-            'position' => 'required|string|max:255',
+            'position' => 'required|string|in:Professor,Assoc Prof. Senior Lecturer,Lecturer',
         ]);
 
-        Academician::create($validated);
+        $user = User::find($request->user_id);
 
-        return redirect()->route('academicians.index')->with('success', 'Academician created successfully.');
+        Academician::create([
+            'user_id' => $user->id,
+            'name' => $user->name,
+            'staff_number' => $request->staff_number,
+            'email' => $user->email,
+            'college' => $request->college,
+            'department' => $request->department,
+            'position' => $request->position,
+        ]);
+
+        return redirect()->route('welcome')->with('success', 'Academician profile completed successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show($id)
+    public function show(Academician $academician)
     {
-        $academician = Academician::findOrFail($id);
         return view('academicians.show', compact('academician'));
     }
-    
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Academician $academician)
     {
         return view('academicians.edit', compact('academician'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, Academician $academician)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'staff_number' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
+        $request->validate([
+            'staff_number' => 'required|string|max:255|unique:academicians,staff_number,' . $academician->id,
             'college' => 'required|string|max:255',
             'department' => 'required|string|max:255',
-            'position' => 'required|string|max:255',
+            'position' => 'required|string|in:Professor,Assoc Prof. Senior Lecturer,Lecturer',
         ]);
 
-        $academician = Academician::findOrFail($id);
-        $academician->update($validated);
-        return redirect()->route('academicians.show', $academician->id)->with('success', 'Academician updated successfully!');
+        $academician->update([
+            'staff_number' => $request->staff_number,
+            'college' => $request->college,
+            'department' => $request->department,
+            'position' => $request->position,
+        ]);
+
+        return redirect()->route('academicians.index')->with('success', 'Academician profile updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Academician $academician)
     {
         $academician->delete();
-
-        return redirect()->route('academicians.index')->with('success', 'Academician deleted successfully.');
+        return redirect()->route('academicians.index')->with('success', 'Academician profile deleted successfully.');
     }
 }

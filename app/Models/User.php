@@ -49,4 +49,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Grant::class, 'grant_user', 'user_id', 'grant_id');
     }
+
+    public function academician()
+{
+    return $this->hasOne(Academician::class);
+}
+
 }
