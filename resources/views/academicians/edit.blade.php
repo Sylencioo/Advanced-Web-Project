@@ -11,6 +11,7 @@
         Update the details of the academician.
     </p>
 
+    @can('academician-actions')
     <form method="POST" action="{{ route('academicians.update', $academician->id) }}" class="mt-8 max-w-md mx-auto">
         @csrf
         @method('PUT')
@@ -57,5 +58,6 @@
 
         <button type="submit" class="btn btn-success">Update Academician</button>
     </form>
+    @endcan
 </div>
 @endsection

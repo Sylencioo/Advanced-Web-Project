@@ -1,11 +1,10 @@
 <?php
 
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AcademicianController;
 use App\Http\Controllers\GrantController;
 use App\Http\Controllers\MilestoneController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,23 +12,20 @@ Route::get('/', function () {
     return view('welcome', compact('grants'));
 })->name('welcome');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
 // Registration routes
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 
 // Academician details routes
-Route::get('/academicians/create', [AcademicianController::class, 'create'])->name('academicians.create');
-Route::post('/academicians', [AcademicianController::class, 'store'])->name('academicians.store');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/academicians', [AcademicianController::class, 'index'])->name('academicians.index');
+    Route::get('/academicians/create', [AcademicianController::class, 'create'])->name('academicians.create')->middleware('can:admin-actions,can:academician-actions');
+    Route::post('/academicians', [AcademicianController::class, 'store'])->name('academicians.store')->middleware('can:admin-actions,can:academician-actions');
+    Route::get('/academicians/{academician}/edit', [AcademicianController::class, 'edit'])->name('academicians.edit')->middleware('can:academician-actions');
+    Route::put('/academicians/{academician}', [AcademicianController::class, 'update'])->name('academicians.update')->middleware('can:academician-actions');
+    Route::delete('/academicians/{academician}', [AcademicianController::class, 'destroy'])->name('academicians.destroy')->middleware('can:admin-actions,can:academician-actions');
+    Route::get('/academicians/{academician}', [AcademicianController::class, 'show'])->name('academicians.show')->middleware('can:admin-actions,can:academician-actions');
+});
 
 // Authentication routes
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
@@ -37,21 +33,22 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 // Grant routes
-Route::resource('grants', GrantController::class);
-Route::post('/grants/{id}/add-member', [GrantController::class, 'addMember'])->name('grants.addMember');
-Route::delete('/grants/{grant_id}/remove-member/{academician_id}', [GrantController::class, 'removeMember'])->name('grants.removeMember');
+Route::middleware(['auth'])->group(function () {
+    Route::resource('grants', GrantController::class)->middleware('can:manage-grants');
+    Route::post('/grants/{id}/add-member', [GrantController::class, 'addMember'])->name('grants.addMember')->middleware('can:add-members');
+    Route::delete('/grants/{grant_id}/remove-member/{academician_id}', [GrantController::class, 'removeMember'])->name('grants.removeMember')->middleware('can:manage-grants');
+});
 
 // Milestone routes
-Route::get('/milestones', [MilestoneController::class, 'index'])->name('milestones.index');
-Route::get('/grants/{grant_id}/milestones', [MilestoneController::class, 'milestonesByGrant'])->name('milestones.byGrant');
-Route::get('/grants/{grant_id}/milestones/create', [MilestoneController::class, 'create'])->name('milestones.create');
-Route::post('/grants/{grant_id}/milestones', [MilestoneController::class, 'store'])->name('milestones.store');
-Route::get('/milestones/{id}', [MilestoneController::class, 'show'])->name('milestones.show');
-Route::get('/milestones/{id}/edit', [MilestoneController::class, 'edit'])->name('milestones.edit');
-Route::put('/milestones/{id}', [MilestoneController::class, 'update'])->name('milestones.update');
-Route::delete('/milestones/{id}', [MilestoneController::class, 'destroy'])->name('milestones.destroy');
-
-// Academician routes
-Route::resource('academicians', AcademicianController::class);
+Route::middleware(['auth'])->group(function () {
+    Route::get('/milestones', [MilestoneController::class, 'index'])->name('milestones.index')->middleware('can:manage-milestones');
+    Route::get('/grants/{grant_id}/milestones', [MilestoneController::class, 'milestonesByGrant'])->name('milestones.byGrant')->middleware('can:manage-milestones');
+    Route::get('/grants/{grant_id}/milestones/create', [MilestoneController::class, 'create'])->name('milestones.create')->middleware('can:manage-milestones');
+    Route::post('/grants/{grant_id}/milestones', [MilestoneController::class, 'store'])->name('milestones.store')->middleware('can:manage-milestones');
+    Route::get('/milestones/{id}', [MilestoneController::class, 'show'])->name('milestones.show')->middleware('can:manage-milestones');
+    Route::get('/milestones/{id}/edit', [MilestoneController::class, 'edit'])->name('milestones.edit')->middleware('can:manage-milestones');
+    Route::put('/milestones/{id}', [MilestoneController::class, 'update'])->name('milestones.update')->middleware('can:manage-milestones');
+    Route::delete('/milestones/{id}', [MilestoneController::class, 'destroy'])->name('milestones.destroy')->middleware('can:manage-milestones');
+});
 
 require __DIR__.'/auth.php';

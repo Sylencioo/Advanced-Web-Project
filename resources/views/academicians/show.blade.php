@@ -20,12 +20,22 @@
             <p class="card-text"><strong>Department:</strong> {{ $academician->department }}</p>
             <p class="card-text"><strong>Position:</strong> {{ $academician->position }}</p>
             <a href="{{ route('academicians.index') }}" class="btn btn-primary mt-3">Back to List</a>
+            @can('admin-actions')
             <a href="{{ route('academicians.edit', $academician->id) }}" class="btn btn-warning mt-3">Edit</a>
             <form action="{{ route('academicians.destroy', $academician->id) }}" method="POST" class="d-inline">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-danger mt-3">Delete</button>
             </form>
+            @endcan
+            @can('academician-actions')
+            <a href="{{ route('academicians.edit', $academician->id) }}" class="btn btn-warning mt-3">Edit</a>
+            <form action="{{ route('academicians.destroy', $academician->id) }}" method="POST" class="d-inline">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger mt-3">Delete</button>
+            </form>
+            @endcan
         </div>
     </div>
 </div>

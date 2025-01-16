@@ -1,11 +1,12 @@
 @extends('layouts.master')
 
-@section('title', 'Complete Academician Profile')
+@section('title', 'Create Academician')
 
 @section('content')
 <div class="container mt-5">
-    <h1 class="text-center">Complete Academician Profile</h1>
-    <form method="POST" action="{{ route('academicians.store') }}" class="mt-4">
+    <h1 class="text-center">Create Academician</h1>
+    @can('admin-actions')
+    <form method="POST" action="{{ route('academicians.store') }}">
         @csrf
 
         <div class="mb-3">
@@ -59,5 +60,6 @@
 
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    @endcan
 </div>
 @endsection
